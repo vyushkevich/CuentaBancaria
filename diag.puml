@@ -1,0 +1,39 @@
+@startuml diag
+
+class BankAccount {
+    - balance: float
+    - deposits: int = 0
+    - withdrawals: int = 0
+    - annualRate: float
+    - monthlyFee: float = 0.0
+    
+    + BankAccount(balance: float, annualRate: float)
+    + deposit(amount: float): void
+    + withdraw(amount: float): void
+    + calculateMonthlyInterest(): void
+    + generateMonthlyStatement(): void
+    + printDetails(): String
+}
+
+class SavingsAccount {
+    - active: boolean
+    
+    + deposit(amount: float): void
+    + withdraw(amount: float): void
+    + generateMonthlyStatement(): void
+    + printDetails(): String
+}
+
+class CurrentAccount {
+    - overdraft: float = 0.0
+
+    + deposit(amount: float): void
+    + withdraw(amount: float): void
+    + generateMonthlyStatement(): void
+    + printDetails(): String
+}
+
+BankAccount <|-- SavingsAccount
+BankAccount <|-- CurrentAccount
+
+@enduml
