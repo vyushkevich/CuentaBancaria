@@ -40,6 +40,10 @@ public class Account {
         monthlyFee = 0;
     }
 
+    public float getBalance() {
+        return balance;
+    }
+
     public String printDetails() {
         return String.format(
             "Balance: %.2f\nMonthly Fee: %.2f\nDeposits: %d\nWithdrawals: %d",

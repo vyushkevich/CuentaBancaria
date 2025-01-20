@@ -37,4 +37,8 @@ public class CurrentAccount extends Account {
     public String printDetails() {
         return super.printDetails() + String.format("\nOverdraft: %.2f", overdraft);
     }
+
+    public float getOverdraft() {
+        return overdraft;
+    }
 }

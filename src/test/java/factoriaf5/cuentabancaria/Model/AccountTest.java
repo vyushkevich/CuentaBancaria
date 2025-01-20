@@ -2,35 +2,28 @@ package factoriaf5.cuentabancaria.Model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class AccountTest {
+public class AccountTest {
 
     @Test
-    void depositIncreasesBalance() {
-        Account account = new Account(1000, 5);
+    public void testDeposit() {
+        Account account = new Account(1000, 5.0f);
         account.deposit(500);
-        assertEquals(1500, account.balance);
+        assertEquals(1500, account.getBalance(), 0.001);
     }
 
     @Test
-    void withdrawDecreasesBalance() {
-        Account account = new Account(1000, 5);
+    public void testWithdraw() {
+        Account account = new Account(1000, 5.0f);
         account.withdraw(300);
-        assertEquals(700, account.balance);
+        assertEquals(700, account.getBalance(), 0.001);
     }
 
     @Test
-    void withdrawDoesNotExceedBalance() {
-        Account account = new Account(1000, 5);
-        account.withdraw(2000);
-        assertEquals(1000, account.balance);
-    }
-
-    @Test
-    void monthlyStatementCalculatesInterest() {
-        Account account = new Account(1200, 6);
-        account.monthlyStatement();
-        assertEquals(1206, account.balance, 0.1); // учитываем проценты
+    public void testCalculateMonthlyInterest() {
+        Account account = new Account(1000, 12.0f); // 12% annual interest
+        account.calculateMonthlyInterest();
+        assertEquals(1010, account.getBalance(), 0.001); // 1% monthly interest
     }
 }

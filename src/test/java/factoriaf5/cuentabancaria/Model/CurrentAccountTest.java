@@ -2,35 +2,33 @@ package factoriaf5.cuentabancaria.Model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class AccountTest {
+public class CurrentAccountTest {
 
     @Test
-    void depositIncreasesBalance() {
-        Account account = new Account(1000, 5);
-        account.deposit(500);
-        assertEquals(1500, account.balance);
+    public void testOverdraftWithdraw() {
+        CurrentAccount account = new CurrentAccount(1000, 5.0f);
+        account.withdraw(1500);
+        assertEquals(0, account.getBalance(), 0.001);
+        assertEquals(500, account.getOverdraft(), 0.001);
     }
 
     @Test
-    void withdrawDecreasesBalance() {
-        Account account = new Account(1000, 5);
-        account.withdraw(300);
-        assertEquals(700, account.balance);
+    public void testDepositToOverdraft() {
+        CurrentAccount account = new CurrentAccount(0, 5.0f);
+        account.withdraw(500); // Overdraft: 500
+        account.deposit(300);  // Overdraft reduces to 200
+        assertEquals(0, account.getBalance(), 0.001);
+        assertEquals(200, account.getOverdraft(), 0.001);
     }
 
     @Test
-    void withdrawDoesNotExceedBalance() {
-        Account account = new Account(1000, 5);
-        account.withdraw(2000);
-        assertEquals(1000, account.balance);
-    }
-
-    @Test
-    void monthlyStatementCalculatesInterest() {
-        Account account = new Account(1200, 6);
-        account.monthlyStatement();
-        assertEquals(1206, account.balance, 0.1); // учитываем проценты
+    public void testDepositBeyondOverdraft() {
+        CurrentAccount account = new CurrentAccount(0, 5.0f);
+        account.withdraw(500); // Overdraft: 500
+        account.deposit(600);  // Overdraft clears, balance: 100
+        assertEquals(100, account.getBalance(), 0.001);
+        assertEquals(0, account.getOverdraft(), 0.001);
     }
 }
