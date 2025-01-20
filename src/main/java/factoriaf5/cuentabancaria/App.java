@@ -1,17 +1,16 @@
 package factoriaf5.cuentabancaria;
 
-/**
- * Hello world!
- */
-public final class App {
-    private App() {
-    }
+import factoriaf5.cuentabancaria.Controller.BankController;
+import factoriaf5.cuentabancaria.Model.SavingsAccount;
+import factoriaf5.cuentabancaria.View.BankView;
 
-    /**
-     * Says hello to the world.
-     * @param args The arguments of the program.
-     */
+public class App {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        BankView view = new BankView();
+        SavingsAccount account = new SavingsAccount(15000, 3.5f);
+        BankController controller = new BankController(account, view);
+
+        controller.start();
     }
 }
+
